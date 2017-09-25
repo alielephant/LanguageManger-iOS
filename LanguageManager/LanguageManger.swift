@@ -18,7 +18,7 @@ class LanguageManger: Bundle {
         return LanguageManger()
     }()
     
-    // save/get seleccted language
+    // set/get seleccted language
     var currentLang:String{
         get{
             return UserDefaults.standard.string(forKey: "selectedLanguage") ?? NSLocale.preferredLanguages[0]
@@ -37,6 +37,12 @@ class LanguageManger: Bundle {
         }
     }
     
+    // set language useing enum
+    func setLanguage(language:Languages){
+        setLanguage(language: language.rawValue)
+    }
+    
+    // set language using string
     func setLanguage(language:String){
         // change current bundle path from main to selected language
         let value = Bundle(path: Bundle.main.path(forResource: language, ofType: "lproj")!)
@@ -82,6 +88,20 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: langBundle!, comment: "")
     }
     
+}
+
+enum Languages:String{
+    case ar,en,nl,ja,ko,vi,ru,sv,fr,es,pt,it,de,da,fi,nb,tr,el,id,ms,th,hi,hu,pl,cs,sk,uk,hr,ca,ro,he
+    case enGB = "en-GB"
+    case enAU = "en-AU"
+    case enCA = "en-CA"
+    case enIN = "en-IN"
+    case frCA = "fr-CA"
+    case esMX = "es-MX"
+    case ptBR = "pt-BR"
+    case zhHans = "zh-Hans"
+    case zhHant = "zh-Hant"
+    case zhHK = "zh-HK"
 }
 
 

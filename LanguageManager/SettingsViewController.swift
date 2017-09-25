@@ -20,7 +20,8 @@ class SettingsViewController: UIViewController {
     @IBAction func changeLanguage(_ sender: UIButton) {
         let selectedLanguage = sender.tag == 1 ? "en" : "ar"
         LanguageManger.shared.setLanguage(language: selectedLanguage)
-        
+//        LanguageManger.shared.setLanguage(language: .ar) // you can use enum
+
         
         UIApplication.topViewController!.dismiss(animated: true) {
             UIApplication.topViewController!.dismiss(animated: true) {

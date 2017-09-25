@@ -2,7 +2,7 @@
 Language manger used to handle change app language without restart the app
 <br>
 *Note <br>
-This language manger change the Bundle in the run time, so you need to handel other things like right to left in supviews and don't forget to add the localized files for laguages you are using.
+This language manger change the Bundle in the run time, so you need to handel other things like right to left in subviews and don't forget to add the localized files for laguages you are using.
 
 <b>ScreenShots</b>
 

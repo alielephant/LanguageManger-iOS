@@ -16,8 +16,15 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Hello !!".localiz()
 
-        lblTest.text = "Test language".localiz()
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        dateFormatter.locale = LanguageManger.shared.appLocale
+        
+        let month = dateFormatter.string(from: date)
+        lblTest.text = month
         
     }
 

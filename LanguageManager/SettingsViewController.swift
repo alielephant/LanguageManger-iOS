@@ -18,17 +18,17 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func changeLanguage(_ sender: UIButton) {
-        let selectedLanguage = sender.tag == 1 ? "en" : "ar"
-        LanguageManger.shared.setLanguage(language: selectedLanguage)
-//        LanguageManger.shared.setLanguage(language: .ar) // you can use enum
-
         
+        let selectedLanguage:Languages = sender.tag == 1 ? .en : .ar
+        
+        // change the language
+        LanguageManger.shared.setLanguage(language: selectedLanguage)
+
+        // return to root view contoller and reload it
         UIApplication.topViewController!.dismiss(animated: true) {
-            UIApplication.topViewController!.dismiss(animated: true) {
-                let delegate = UIApplication.shared.delegate as! AppDelegate
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                delegate.window?.rootViewController = storyboard.instantiateInitialViewController()
-            }
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            delegate.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
     }
     

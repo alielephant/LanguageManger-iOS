@@ -1,8 +1,12 @@
-# LanguageManger-iOS
+<p align="center">
+ <img src="https://github.com/Abedalkareem/LanguageManger-iOS/blob/master/logo.png?raw=true"  width="150">  </center>
+</p>
+<br>
+
 Language manger used to handle change app language without restart the app
 <br>
 *Note <br>
-This language manger change the Bundle in the run time, so you need to handel other things like right to left in subviews and don't forget to add the localized files for laguages you are using.
+The language manger help you to support multible language in your app, However there is some cases that you whant to handel it your self like 
 
 <b>ScreenShots</b>
 

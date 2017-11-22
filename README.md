@@ -9,7 +9,7 @@ Language manger used to handle change app language without restart the app
 
 <b>ScreenShots</b>
 
-<img src="https://raw.githubusercontent.com/Abedalkareem/LanguageManger-iOS/master/screen.gif"  width="450">
+<img src="https://raw.githubusercontent.com/Abedalkareem/LanguageManger-iOS/master/screenrec.gif"  width="450">
 
 <b>Usage</b>
 

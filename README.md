@@ -5,8 +5,7 @@
 
 Language manger used to handle change app language without restart the app
 <br>
-*Note <br>
-The language manger help you to support multible language in your app, However there is some cases that you whant to handel it your self like 
+
 
 <b>ScreenShots</b>
 
@@ -32,6 +31,12 @@ The language manger help you to support multible language in your app, However t
         }
     }
 ```
+
+*Note <br>
+The language manager help you to support multiple languages in your app, However, there are some cases that you want to handle it yourself like some ```UILable``` or ```UITextField``` didn't change the direction, so you need to do that .
+Example:
+
+``` textAlignment =  LanguageManger.shared.isRightToLeft ? .right : .left. ```
 
 <b>Installation</b>
 

@@ -17,17 +17,17 @@ Language manger used to handle change app language without restart the app
 
 ```swift
     @IBAction func changeLanguage(_ sender: UIButton) {
-        let selectedLanguage = sender.tag == 1 ? "en" : "ar"
-        // set the language you need
-        LanguageManger.shared.setLanguage(language: selectedLanguage)
         
+        let selectedLanguage:Languages = sender.tag == 1 ? .en : .ar
+        
+        // change the language
+        LanguageManger.shared.setLanguage(language: selectedLanguage)
+
         // then you must to pop all view controllers and return to root view controller then re set the root view controller 
         UIApplication.topViewController!.dismiss(animated: true) {
-            UIApplication.topViewController!.dismiss(animated: true) {
-                let delegate = UIApplication.shared.delegate as! AppDelegate
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                delegate.window?.rootViewController = storyboard.instantiateInitialViewController()
-            }
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            delegate.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
     }
 ```

@@ -22,7 +22,7 @@ and for arabic file :  <br>
 
 
  <br>
-After that in ```didFinishLaunchingWithOptions``` inside the ```AppDelegate``` set your default language that your app will run first time
+After that in didFinishLaunchingWithOptions inside the AppDelegate.swift set your default language that your app will run first time
 
 ```swift
 LanguageManger.shared.defaultLanguage = .en

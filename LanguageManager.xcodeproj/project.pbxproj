@@ -64,8 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				C6A57B441E9A199C005397F7 /* AppDelegate.swift */,
-				C6A57B5C1E9A1C01005397F7 /* ViewControllers */,
 				C6A57B561E9A19C4005397F7 /* LanguageManger.swift */,
+				C6A57B5C1E9A1C01005397F7 /* ViewControllers */,
 				C6A57B5D1E9A1C11005397F7 /* SupportFiles */,
 			);
 			path = LanguageManager;

@@ -14,7 +14,21 @@ Language manager used to handle change app language without restart the app
 
 <b>Usage</b>
 
+First of all remember to add the ```Localizable.strings``` to your project, after adding the ```Localizable.strings``` file, select it then go to file inspictor and below localiztion press localize, after that go to ```PROJECT > Localisation```  then add the languages you want to support (Arabic for example), dialog will apper to ask you which resource file you want to localize, select just the ```Localizable.strings``` file. <br>  <br>
+Now, go to your storyboard and add ```UILable``` and add text to it, for example ```"Hello !"```, then go to your ```Localizable.strings``` file expand it, you will find Localizable strings file for English and arabic, for english put just this line with the string you putted in the ```UILabel``` inside the storyboard   <br>
+```"Hello !" = "Hello !";```  <br>
+and for arabic file :  <br>
+```"Hello !" = "مرحبا !";```  <br>
 
+
+ <br>
+After that in ```didFinishLaunchingWithOptions``` inside the ```AppDelegate``` set your default language that your app will run first time
+
+```swift
+LanguageManger.shared.defaultLanguage = .en
+```
+
+If you want to change the language use the ```setLanguage(language:)``` method by passing to it the new language
 
 ```swift
     @IBAction func changeLanguage(_ sender: UIButton) {

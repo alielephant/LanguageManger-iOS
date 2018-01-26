@@ -27,11 +27,8 @@
 		C6A57B4E1E9A199C005397F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C6A57B501E9A199C005397F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6A57B561E9A19C4005397F7 /* LanguageManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManger.swift; sourceTree = "<group>"; };
-		C6A57B591E9A1AAA005397F7 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C6A57B5A1E9A1BF9005397F7 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C6A57B5E1E9A2199005397F7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		C6A57B611E9A22FA005397F7 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
-		C6A57B631E9A22FF005397F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		C6A57B671E9A23EE005397F7 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C6A57B691E9A23F0005397F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,8 +182,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C6A57B491E9A199C005397F7 /* Base */,
-				C6A57B611E9A22FA005397F7 /* ar */,
-				C6A57B631E9A22FF005397F7 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -195,7 +190,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C6A57B4E1E9A199C005397F7 /* Base */,
-				C6A57B591E9A1AAA005397F7 /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -352,6 +346,7 @@
 				C6A57B551E9A199C005397F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

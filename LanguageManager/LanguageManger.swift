@@ -3,112 +3,97 @@
 //
 //  Created by abedalkareem omreyh on 10/23/17.
 //  Copyright © 2017 abedlkareem omreyh. All rights reserved.
+//  GitHub: https://github.com/Abedalkareem/LanguageManger-iOS
 //
 
 import UIKit
 
-var AssociatedObjectHandle: UInt8 = 0
+class LanguageManger {
+    
+    /// Returns the singleton LanguageManger instance.
+    static let shared: LanguageManger = LanguageManger()
+    
+    
+    /// Returns the currnet language
+    var currentLanguage: Languages {
+        get {
+            
+            guard let currentLang = UserDefaults.standard.string(forKey: "selectedLanguage") else {
+                fatalError("Did you set the default language for the app ?")
+            }
+            return Languages(rawValue: currentLang)!
+        }
+        set {
+            
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedLanguage")
+        }
+    }
+    
+    /// Returns the default language that the app will run first time
+    var defaultLanguage: Languages {
+        get {
+            
+            guard let defaultLanguage = UserDefaults.standard.string(forKey: "defaultLanguage") else {
+                fatalError("Did you set the default language for the app ?")
+            }
+            return Languages(rawValue: defaultLanguage)!
+        }
+        set {
+            
+            // swizzle the awakeFromNib from nib and localize the text in the new awakeFromNib
+            UIView.localize()
+            
+            let defaultLanguage = UserDefaults.standard.string(forKey: "defaultLanguage")
+            guard defaultLanguage == nil else {
+                return
+            }
+            
+            UserDefaults.standard.set(newValue.rawValue, forKey: "defaultLanguage")
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedLanguage")
+            setLanguage(language: newValue)
+        }
+    }
 
-class LanguageManger: Bundle {
     
-    
-    static let shared:LanguageManger = {
-        object_setClass(Bundle.main, LanguageManger.self)
-        return LanguageManger()
-    }()
-    
-    // set/get seleccted language
-    var currentLang:String{
-        get{
-            return UserDefaults.standard.string(forKey: "selectedLanguage") ?? NSLocale.preferredLanguages[0]
-        }
-        set{
-            UserDefaults.standard.set(newValue, forKey: "selectedLanguage")
+    /// Returns the diriction of the language
+    var isRightToLeft: Bool {
+        get {
+            let lang = currentLanguage.rawValue
+            return lang.contains("ar") || lang.contains("he") || lang.contains("ur") || lang.contains("fa")
         }
     }
     
-    var isRightToLeft:Bool{
-        get{
-            let lang = currentLang
-            return lang.contains("ar") || lang.contains("he")
+    /// Returns the app locale for use it in dates and currency
+    var appLocale: Locale {
+        get {
+            return Locale(identifier: currentLanguage.rawValue)
         }
     }
     
-    var appLocale:Locale{
-        get{
-            return Locale(identifier: currentLang)
-        }
-    }
-    
-    // overide localized string function
-    override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
-        if let bundle = objc_getAssociatedObject(self, &AssociatedObjectHandle) as? Bundle{
-            return bundle.localizedString(forKey: key, value: value, table: tableName)
-        }else{
-            return super.localizedString(forKey: key, value: value, table: tableName)
-        }
-    }
-    
-    // set language useing enum
-    func setLanguage(language:Languages){
+    ///
+    /// Set the current language for the app
+    ///
+    /// - parameter language: The language that you need from the app to run with
+    ///
+    func setLanguage(language: Languages) {
+        
+        // change the dircation of the views
         let semanticContentAttribute:UISemanticContentAttribute = language == .ar ? .forceRightToLeft : .forceLeftToRight
         UIView.appearance().semanticContentAttribute = semanticContentAttribute
         UINavigationBar.appearance().semanticContentAttribute = semanticContentAttribute
         UITextField.appearance().semanticContentAttribute = semanticContentAttribute
         UITextView.appearance().semanticContentAttribute = semanticContentAttribute
-        setLanguage(language: language.rawValue)
-    }
-    
-    // set language using string
-    private func setLanguage(language:String){
-        
-        // change current bundle path from main to selected language
-        let value = Bundle(path: Bundle.main.path(forResource: language, ofType: "lproj")!)
-        objc_setAssociatedObject(Bundle.main, &AssociatedObjectHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         // change app language
-        UserDefaults.standard.set([language], forKey: "AppleLanguages")
+        UserDefaults.standard.set([language.rawValue], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
         
         // set current language
-        currentLang = language
-        
-        // used to get notification when language change (if you have somthing to do)
-        NotificationCenter.default.post(name: NSNotification.Name.LanguageDidChange, object: nil)
-        
-    }
-    
-    
-    
-    
-    
-}
-
-// MARK: NSNotification.Name extension
-extension NSNotification.Name {
-    // used to get notification when language change (if you have somthing to do)
-    static var LanguageDidChange:NSNotification.Name{
-        return NSNotification.Name.init("languageDidChange")
+        currentLanguage = language
     }
 }
 
-
-// MARK: String extension
-extension String {
-    
-    // used to localize string from code
-    func localiz() -> String{
-        guard let bundle = Bundle.main.path(forResource: LanguageManger.shared.currentLang, ofType: "lproj") else {
-            return NSLocalizedString(self, comment: "")
-        }
-        
-        let langBundle = Bundle(path: bundle)
-        return NSLocalizedString(self, tableName: nil, bundle: langBundle!, comment: "")
-    }
-    
-}
-
-enum Languages:String{
+enum Languages:String {
     case ar,en,nl,ja,ko,vi,ru,sv,fr,es,pt,it,de,da,fi,nb,tr,el,id,ms,th,hi,hu,pl,cs,sk,uk,hr,ca,ro,he
     case enGB = "en-GB"
     case enAU = "en-AU"
@@ -123,10 +108,66 @@ enum Languages:String{
 }
 
 
+// MARK: Swizzling
+extension UIView {
+    static func localize() {
+        
+        let orginalSelector = #selector(awakeFromNib)
+        let swizzledSelector = #selector(swizzledAwakeFromNib)
+        
+        let orginalMethod = class_getInstanceMethod(self, orginalSelector)
+        let swizzledMethod = class_getInstanceMethod(self, swizzledSelector)
+        
+        let didAddMethod = class_addMethod(self, orginalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
+        
+        if didAddMethod {
+            class_replaceMethod(self, swizzledSelector, method_getImplementation(orginalMethod!), method_getTypeEncoding(orginalMethod!))
+        } else {
+            method_exchangeImplementations(orginalMethod!, swizzledMethod!)
+        }
+        
+    }
+    
+    @objc func swizzledAwakeFromNib() {
+        swizzledAwakeFromNib()
+        
+        switch self {
+        case let txtf as UITextField:
+            txtf.text = txtf.text?.localiz()
+        case let lbl as UILabel:
+            lbl.text = lbl.text?.localiz()
+        case let btn as UIButton:
+            btn.setTitle(btn.title(for: .normal)?.localiz(), for: .normal)
+        default:
+            break
+        }
+    }
+}
+
+
+// MARK: String extension
+extension String {
+    
+    ///
+    /// Localize the current string to the selected language
+    ///
+    /// - returns: The localized string
+    ///
+    func localiz() -> String {
+        guard let bundle = Bundle.main.path(forResource: LanguageManger.shared.currentLanguage.rawValue, ofType: "lproj") else {
+            return NSLocalizedString(self, comment: "")
+        }
+        
+        let langBundle = Bundle(path: bundle)
+        return NSLocalizedString(self, tableName: nil, bundle: langBundle!, comment: "")
+    }
+    
+}
+
 // MARK: UIApplication extension
 extension UIApplication {
-    // used to get top view controller
-    static var topViewController:UIViewController?{
+    // Get top view controller
+    static var topViewController:UIViewController? {
         get{
             if var topController = UIApplication.shared.keyWindow?.rootViewController {
                 while let presentedViewController = topController.presentedViewController {
